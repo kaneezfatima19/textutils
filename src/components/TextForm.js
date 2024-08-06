@@ -32,7 +32,7 @@ export default function TextForm(props) {
         window.speechSynthesis.speak(newText);
         props.handleAlert("Speak mode on","success")
     }
-    const downloadText = (text, filename) => {
+    {/*const downloadText = (text, filename) => {
         const element = document.createElement('a');
         const file = new Blob([text], {type: 'text/plain'});
         
@@ -43,7 +43,27 @@ export default function TextForm(props) {
         element.click();
         
         document.body.removeChild(element);
-    }
+    }*/}
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(text)/*.then(() => {
+          alert('Text copied to clipboard!');
+        }).catch(err => {
+          console.error('Failed to copy text: ', err);
+        });*/
+        props.handleAlert('Text copied to clipboard!','success')
+    };
+
+    const removeExtraSpaces = () => {
+        const trimmedText = text.replace(/\s+/g, ' ').trim();
+        setText(trimmedText);
+    };
+    {/*
+    1. / and /: These delimit the start and end of the regex pattern.
+    2. \s: This is a shorthand character class that matches any whitespace character. This includes spaces, tabs, and newline characters.
+    3. +: This is a quantifier that matches one or more occurrences of the preceding character or group (in this case, one or more whitespace characters).
+    4. g: This stands for "global" and means that the regex should be applied globally to the entire string, not just the first match.
+    */}
     
     //on change even is used to type something in the text box
     const handleOnChange=(event)=>{
@@ -68,24 +88,25 @@ export default function TextForm(props) {
       }} id="myBox" rows="8"></textarea>
       </div>
 
-    <button className="btn btn-dark dropdown-toggle" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <button disabled={text.length===0} className="btn btn-dark dropdown-toggle" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Case</button>
     <ul className="dropdown-menu">
     <li><button className="btn btn-dark dropdown-item" onClick={handleUpClick} >UpperCase</button></li>
     <li><button className="btn btn-dark dropdown-item " onClick={handleLowCick}>LowerCase</button></li>
     <li><button className="btn btn-dark dropdown-item" onClick={handleSenClick}>SentenceCase</button></li>
     </ul>
-    <button type="submit" className="btn btn-dark mx-2" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleSpeak}>Speak</button>
-    <button className="btn btn-dark mx-2" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleRevCick}>Reverse</button>
-    <button className="btn btn-dark mx-2" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={downloadText}>Download</button>
-    <button className="btn btn-dark mx-2" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleClearCick}>Clear</button>
-
+    <button disabled={text.length===0} type="submit" className="btn btn-dark mx-2" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleSpeak}>Speak</button>
+    <button disabled={text.length===0} className="btn btn-dark mx-2 my-1" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleRevCick}>Reverse</button>
+    <button disabled={text.length===0} className="btn btn-dark mx-2 my-1" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={removeExtraSpaces}>Remove extra spaces</button>
+    <button disabled={text.length===0} className="btn btn-dark mx-2 my-1" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={copyToClipboard }>Copy</button>
+    <button disabled={text.length===0} className="btn btn-dark mx-2 my-1" style={{backgroundColor:props.prettyMode==='pretty'?'#8e539d':'black',color: props.prettyMode==='pretty'?'black':'white'}} onClick={handleClearCick}>Clear</button>
+    
     <div className="container my-4" style={{color: props.mode==='dark'?'white':'black'}}>
         <h2>Your Text Summary</h2>
-        <p>{text.split(/\s+/).filter((word) => word.length > 0).length} words and {text.length} characters</p>
+        <p>{text.split(" ").filter((element) => {return element.length !== 0}).length} words and {text.length} characters</p>
         <p>{0.008 * text.split(/\s+/).filter((word) => word.length > 0).length} Minutes read</p>
         <h2>Preview</h2>
-        <p>{text.length>0?text:"Enter your text in the above text box to preview it here"}</p>
+        <p>{text.length>0?text:"Nothing to preview!"}</p>
     </div>
     </div>
     </>

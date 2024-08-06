@@ -15,6 +15,11 @@ function App() {
   const[prettyMode,setPreMode]=useState(null);
   const [alert,setAlert]=useState(null);
 
+  {/*const removeBodyClass=()=>{
+    document.body.classList.remove('pretty')
+    document.body.classList.remove('light')
+  }*/}
+
   const handleAlert=(message,type)=>{
     setAlert({
       msg:message,
@@ -25,6 +30,7 @@ function App() {
     },1500)  
   }
   const toggleMode=()=>{
+    
     if(mode==='light'){
       setMode('dark');
       setPreMode(null);
