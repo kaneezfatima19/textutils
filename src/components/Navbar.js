@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 
 export default function Navbar(props) {
   return (
     <>
-    <nav
-    className={`navbar navbar-expand-lg ${props.prettyMode === 'pretty' ? 'navbar-pretty bg-light' : (props.mode === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light')}`}>
+    <nav className={`navbar navbar-expand-lg ${props.prettyMode === 'pretty' ? 'navbar-pretty bg-light' : (props.mode === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light')}`}>
    
     <div className="container-fluid" >
       {/*<Link className="navbar-brand" to="/">{props.title}</Link>*/}

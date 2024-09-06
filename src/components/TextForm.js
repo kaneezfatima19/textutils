@@ -60,21 +60,21 @@ export default function TextForm(props) {
     };
     {/*
     1. / and /: These delimit the start and end of the regex pattern.
-    2. \s: This is a shorthand character class that matches any whitespace character. This includes spaces, tabs, and newline characters.
+    2. \s: It is for whitespace character. This includes spaces, tabs, and newline characters.
     3. +: This is a quantifier that matches one or more occurrences of the preceding character or group (in this case, one or more whitespace characters).
     4. g: This stands for "global" and means that the regex should be applied globally to the entire string, not just the first match.
     */}
     
-    //on change even is used to type something in the text box
+    //on change event is used to type something in the text box
     const handleOnChange=(event)=>{
         setText(event.target.value)
     }
 
     const [text, setText] = useState("");
-    const[myStyle,setMyStyle]=useState({
+    {/*const[myStyle,setMyStyle]=useState({
         color:'black',
         backgroundColor:'white'
-    })
+    })*/}
   return (
     <>
     <div className="container" style={{ 
